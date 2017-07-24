@@ -15,22 +15,11 @@ public class SummerBaseProperties {
     @Value("${jwt-token-secret:ajMybGtqZGZwYW1qY3ZrbHdqd2Vy}")
     private String jwtTokenSecret;
 
-    @Value("${jwt-filter-patterns:/api/*}")
-    private String jwtFilterPatterns;
-
-    private String jwtFilterExcludeUrl;
+    @Value("${session-manager:org.smartx.summer.session.Impl.SessionManagerImpl}")
+    private Class<SessionManager> sessionManager;
 
     @Value("${audience-expire-time:WEB:43200;APP:0}")
     private String audienceExpireTime;
-
-    @Value("${logging-filter-url-patterns:/api/*}")
-    private String loggingFilterUrlPatterns;
-
-    @Value("${logging=filter-url-patterns:/api/base/*}")
-    private String loggoingFilterExcludeUrl;
-
-    @Value("${session-manager:org.smartx.summer.session.Impl.SessionManagerImpl}")
-    private Class<SessionManager> sessionManager;
 
     public String getJwtTokenSecret() {
         return jwtTokenSecret;
@@ -38,38 +27,6 @@ public class SummerBaseProperties {
 
     public void setJwtTokenSecret(String jwtTokenSecret) {
         this.jwtTokenSecret = jwtTokenSecret;
-    }
-
-    public String getJwtFilterPatterns() {
-        return jwtFilterPatterns;
-    }
-
-    public void setJwtFilterPatterns(String jwtFilterPatterns) {
-        this.jwtFilterPatterns = jwtFilterPatterns;
-    }
-
-    public String getAudienceExpireTime() {
-        return audienceExpireTime;
-    }
-
-    public void setAudienceExpireTime(String audienceExpireTime) {
-        this.audienceExpireTime = audienceExpireTime;
-    }
-
-    public String getLoggingFilterUrlPatterns() {
-        return loggingFilterUrlPatterns;
-    }
-
-    public void setLoggingFilterUrlPatterns(String loggingFilterUrlPatterns) {
-        this.loggingFilterUrlPatterns = loggingFilterUrlPatterns;
-    }
-
-    public String getLoggoingFilterExcludeUrl() {
-        return loggoingFilterExcludeUrl;
-    }
-
-    public void setLoggoingFilterExcludeUrl(String loggoingFilterExcludeUrl) {
-        this.loggoingFilterExcludeUrl = loggoingFilterExcludeUrl;
     }
 
     public Class<SessionManager> getSessionManager() {
@@ -80,11 +37,11 @@ public class SummerBaseProperties {
         this.sessionManager = sessionManager;
     }
 
-    public String getJwtFilterExcludeUrl() {
-        return jwtFilterExcludeUrl;
+    public String getAudienceExpireTime() {
+        return audienceExpireTime;
     }
 
-    public void setJwtFilterExcludeUrl(String jwtFilterExcludeUrl) {
-        this.jwtFilterExcludeUrl = jwtFilterExcludeUrl;
+    public void setAudienceExpireTime(String audienceExpireTime) {
+        this.audienceExpireTime = audienceExpireTime;
     }
 }

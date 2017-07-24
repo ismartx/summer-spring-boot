@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.smartx.summer.session.SessionManager;
 import org.smartx.summer.session.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
