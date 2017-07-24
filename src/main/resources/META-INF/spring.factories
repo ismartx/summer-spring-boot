@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.smartx.summer.autoconfigure.SummerBaseAutoConfiguration,\
+org.smartx.summer.autoconfigure.SummerBaseAutoConfiguration,\
+  org.smartx.summer.autoconfigure.SummerRedisAutoConfiguration
