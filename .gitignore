@@ -101,3 +101,10 @@ local.properties
 .scala_dependencies
 .worksheet
 
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+src/test/
+summer-spring-boot-starter.iml
+target/
