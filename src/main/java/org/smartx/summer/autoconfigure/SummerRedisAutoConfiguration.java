@@ -1,5 +1,7 @@
 package org.smartx.summer.autoconfigure;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.smartx.summer.redis.JedisClusterConnectionFactoryBean;
 import org.smartx.summer.redis.template.HashRedisTemplate;
 import org.smartx.summer.redis.template.ValueRedisTemplate;
@@ -31,6 +33,7 @@ import redis.clients.jedis.JedisPoolConfig;
 @EnableConfigurationProperties(SummerRedisProperties.class)
 public class SummerRedisAutoConfiguration {
 
+    private Logger log = LoggerFactory.getLogger(SummerRedisAutoConfiguration.class);
 
     @Autowired
     private SummerRedisProperties summerRedisProperties;
@@ -55,11 +58,13 @@ public class SummerRedisAutoConfiguration {
 
     @Bean
     public HashRedisTemplate hashRedisTemplate() {
+        log.info("inject hash redis template");
         return new HashRedisTemplate();
     }
 
     @Bean
     public ValueRedisTemplate valueRedisTemplate() {
+        log.info("inject value redis template");
         return new ValueRedisTemplate();
     }
 
