@@ -5,10 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.smartx.summer.config.register.FormatterRegister;
 import org.smartx.summer.filter.JwtTokenAuthFilter;
 import org.smartx.summer.filter.LoggingFilter;
+import org.smartx.summer.interceptor.CacheAdvice;
 import org.smartx.summer.interceptor.JwtInterceptor;
+import org.smartx.summer.interceptor.WebAppExceptionAdvice;
 import org.smartx.summer.redis.JedisClusterConnectionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -30,15 +33,19 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * Created by Wenxin on 2017/7/24.
  */
-@ComponentScan(basePackages = {"org.smartx.summer.interceptor"})
+//@ComponentScan(basePackages = {"org.smartx.summer.interceptor"})
 @Configuration
 @ConditionalOnProperty(
-        name = "org.smartx.summer.enable",
+        name = "summer.enable",
         matchIfMissing = true
 )
 @AutoConfigureAfter(SummerBaseAutoConfiguration.class)
 @EnableConfigurationProperties(SummerWebProperties.class)
-public class SummerWebAutoConfiguration  extends WebMvcConfigurerAdapter {
+@ComponentScan(basePackages = {
+        "org.smartx.summer.controller",
+        "org.smartx.summer.listener"
+})
+public class SummerWebAutoConfiguration extends WebMvcConfigurerAdapter {
 
     @Autowired
     private SummerWebProperties summerWebProperties;
@@ -57,10 +64,10 @@ public class SummerWebAutoConfiguration  extends WebMvcConfigurerAdapter {
         loggingFilter.setFilter(new LoggingFilter());
         loggingFilter.addUrlPatterns(summerWebProperties.getLoggingFilterUrlPatterns());
         loggingFilter.addInitParameter("excludeUrl", summerWebProperties.getLoggoingFilterExcludeUrl());
+        log.warn("inject log filter");
         return loggingFilter;
     }
 
-    @Order(5)
     @Bean
     public FilterRegistrationBean delegatingFilterProxy() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new DelegatingFilterProxy("jwtTokenAuthFilter"));
@@ -68,7 +75,6 @@ public class SummerWebAutoConfiguration  extends WebMvcConfigurerAdapter {
         return filterRegistrationBean;
     }
 
-    @Order(4)
     @Bean("jwtTokenAuthFilter")
     public JwtTokenAuthFilter jwtTokenAuthFilter() {
         JwtTokenAuthFilter jwtTokenAuthFilter = new JwtTokenAuthFilter();
@@ -83,6 +89,16 @@ public class SummerWebAutoConfiguration  extends WebMvcConfigurerAdapter {
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.setEnabled(false);
         return registration;
+    }
+
+    @Bean
+    public CacheAdvice cacheAdvice() {
+        return new CacheAdvice();
+    }
+
+    @Bean
+    public WebAppExceptionAdvice webAppExceptionAdvice() {
+        return new WebAppExceptionAdvice();
     }
 
     @Override

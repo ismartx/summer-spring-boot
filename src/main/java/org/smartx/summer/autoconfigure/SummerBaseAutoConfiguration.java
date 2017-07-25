@@ -21,7 +21,7 @@ import io.jsonwebtoken.lang.Assert;
  */
 @Configuration
 @ConditionalOnProperty(
-        name = "org.smartx.summer.enable",
+        name = "summer.enable",
         matchIfMissing = true
 )
 @EnableConfigurationProperties(SummerBaseProperties.class)
@@ -39,22 +39,24 @@ public class SummerBaseAutoConfiguration {
 
     private void checkRequiredProperties() {
         Assert.hasText(summerBaseProperties.getJwtTokenSecret(), "jwt-token-secret must not be blank");
-        Assert.hasText(summerBaseProperties.getAudienceExpireTime(), "audience-expire-time must not be blank");
         Assert.notNull(summerBaseProperties.getSessionManager(), "session manager must not be null");
     }
 
     @Bean(name = "sessionManager")
     public SessionManager sessionManager() throws IllegalAccessException, InstantiationException {
-        return summerBaseProperties.getSessionManager().newInstance();
+        Class<SessionManager> sessionManager = summerBaseProperties.getSessionManager();
+        log.warn("inject session manager: {}", sessionManager.getName());
+        return sessionManager.newInstance();
     }
 
     @Bean(name = "tokenProvider")
     public TokenProvider tokenProvider() {
         TokenProvider tokenProvider = new TokenProvider();
-        String audienceExpireTime = summerBaseProperties.getAudienceExpireTime();
+        String audienceExpireTime = "WEB:".concat(summerBaseProperties.getWebExpireTime().toString()).concat(";")
+                .concat("APP:").concat(summerBaseProperties.getAppExpireTime().toString());
         tokenProvider.setAudienceExpireTime(audienceExpireTime);
         tokenProvider.setSecret(summerBaseProperties.getJwtTokenSecret());
-        log.info("注入 tokenProvider");
+        log.warn("inject token provider");
         return tokenProvider;
     }
 }

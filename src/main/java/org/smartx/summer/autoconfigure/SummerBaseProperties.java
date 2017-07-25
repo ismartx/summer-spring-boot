@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by Wenxin on 2017/7/24.
  */
 @ConfigurationProperties(
-        prefix = "org.smartx.summer"
+        prefix = "summer"
 )
 public class SummerBaseProperties {
 
@@ -18,8 +18,11 @@ public class SummerBaseProperties {
     @Value("${session-manager:org.smartx.summer.session.Impl.SessionManagerImpl}")
     private Class<SessionManager> sessionManager;
 
-    @Value("${audience-expire-time:WEB:43200;APP:0}")
-    private String audienceExpireTime;
+    @Value("${web-expire-time:43200}")
+    private Integer webExpireTime;
+
+    @Value("${app-expire-time:0}")
+    private Integer appExpireTime;
 
     public String getJwtTokenSecret() {
         return jwtTokenSecret;
@@ -37,11 +40,19 @@ public class SummerBaseProperties {
         this.sessionManager = sessionManager;
     }
 
-    public String getAudienceExpireTime() {
-        return audienceExpireTime;
+    public Integer getWebExpireTime() {
+        return webExpireTime;
     }
 
-    public void setAudienceExpireTime(String audienceExpireTime) {
-        this.audienceExpireTime = audienceExpireTime;
+    public void setWebExpireTime(Integer webExpireTime) {
+        this.webExpireTime = webExpireTime;
+    }
+
+    public Integer getAppExpireTime() {
+        return appExpireTime;
+    }
+
+    public void setAppExpireTime(Integer appExpireTime) {
+        this.appExpireTime = appExpireTime;
     }
 }

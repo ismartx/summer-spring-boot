@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created by Wenxin on 2017/7/24.
  */
 @ConfigurationProperties(
-        prefix = "org.smartx.summer.web"
+        prefix = "summer.web"
 )
 public class SummerWebProperties {
 

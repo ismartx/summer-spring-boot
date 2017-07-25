@@ -11,7 +11,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * Created by Wenxin on 2017/7/24.
  */
 @ConfigurationProperties(
-        prefix = "org.smartx.summer.redis"
+        prefix = "summer.redis"
 )
 public class SummerRedisProperties {
 

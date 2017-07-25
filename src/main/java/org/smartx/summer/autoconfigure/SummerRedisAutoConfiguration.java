@@ -22,7 +22,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @ConditionalOnProperty(
-        name = "org.smartx.summer.redis.enable",
+        name = "summer.redis.enable",
         matchIfMissing = true
 )
 @ConditionalOnMissingBean(HashRedisTemplate.class)
