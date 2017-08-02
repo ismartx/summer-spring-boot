@@ -14,7 +14,7 @@ public class SummerWebProperties {
     @Value("${jwt-filter-patterns:/api/*}")
     private String jwtFilterPatterns;
 
-    @Value("${jwt-filter-exclude-url:/api/*}")
+    @Value("${jwt-filter-exclude-url:/api/base/*}")
     private String jwtFilterExcludeUrl;
 
     @Value("${logging-filter-url-patterns:/api/*}")
